@@ -1,0 +1,19 @@
+services:
+  main:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      - XDG_CACHE_HOME=/app/.cache
+      - JUPYTER_TOKEN=passwd # TODO: Change the token
+    volumes:
+      - ./:/app
+    ports:
+      - 8888:8888
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
